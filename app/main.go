@@ -5,6 +5,7 @@ import (
 	"bufio"
 	"os"
 	"strings"
+	"os/exec"
 )
 func Contains(slice []string, target string) bool {
     for _, item := range slice {
@@ -26,23 +27,32 @@ func main() {
 		command = strings.TrimSpace(command)
 		
 		builtin_commands := []string{"exit", "echo", "type"}
-
+		cmd := command[5:]
 		if command == "exit"{
 			break
 		}else if strings.HasPrefix(command, "echo"){
-			fmt.Println(command[5:])
+			fmt.Println(cmd)
 		}else if strings.HasPrefix(command, "type"){
-			if Contains(builtin_commands,command[5:]){
-				fmt.Println(command[5:] ,"is a shell builtin")
+			if Contains(builtin_commands,cmd){ //Imp
+				fmt.Println(cmd ,"is a shell builtin")
 			}else{
-				fmt.Println(command[5:] + ": not found")
+
+				ans, err := exec.LookPath(cmd)	
+
+				if err == nil {
+					fmt.Println(cmd, "is",ans)
+					continue
+				}
+
+				fmt.Println(cmd + ": not found")
+			
 			}
 		}else{
 			fmt.Println(command + ": command not found")
 		}
 	
 		if err != nil{
-			fmt.Fprintln(os.Stderr, "Error reading input:", err)
+			fmt.Fprintln(os.Stderr, "Error reading input:", err)//imp
 			os.Exit(1)
 		}
 	
