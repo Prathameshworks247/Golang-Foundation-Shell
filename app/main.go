@@ -27,12 +27,13 @@ func main() {
 		command = strings.TrimSpace(command)
 		
 		builtin_commands := []string{"exit", "echo", "type"}
-		cmd := command[5:]
 		if command == "exit"{
 			break
-		}else if strings.HasPrefix(command, "echo"){
+			}else if strings.HasPrefix(command, "echo"){
+			cmd := command[5:]
 			fmt.Println(cmd)
 		}else if strings.HasPrefix(command, "type"){
+			cmd := command[5:]
 			if Contains(builtin_commands,cmd){ //Imp
 				fmt.Println(cmd ,"is a shell builtin")
 			}else{
