@@ -35,7 +35,7 @@ func main() {
 			if Contains(builtin_commands,command[5:]){
 				fmt.Println(command[5:] ,"is a shell builtin")
 			}else{
-				fmt.Println(command[5:] + ": command not found")
+				fmt.Println(command[5:] + ": not found")
 			}
 		}else{
 			fmt.Println(command + ": command not found")
