@@ -49,8 +49,21 @@ func main() {
 			
 			}
 		}else{
-			fmt.Println(command + ": command not found")
-		}
+	parts := strings.Fields(command)
+
+	path, err := exec.LookPath(parts[0])
+
+	if err != nil {
+		fmt.Println(parts[0] + ": command not found")
+		continue
+	}
+
+	cmd := exec.Command(path, parts[1:]...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	_ = cmd.Run()
+}
 	
 		if err != nil{
 			fmt.Fprintln(os.Stderr, "Error reading input:", err)//imp
