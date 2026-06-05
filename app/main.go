@@ -58,7 +58,8 @@ func main() {
 		continue
 	}
 
-	cmd := exec.Command(path, parts[1:]...)
+	cmd := exec.Command(parts[0], parts[1:]...)
+	cmd.Path = path
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
