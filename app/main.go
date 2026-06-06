@@ -74,20 +74,24 @@ func main() {
 		case "pwd":
 			dir, err := os.Getwd()
 
-			if err != nil{
+			if err != nil {
 				log.Fatalf("Failed to read current working directory: %v", err)
 			}
 			fmt.Println(dir)
 		case "cd":
-			if len(parts) < 2{
+			if len(parts) < 2 {
 				continue
 			}
 
 			dir := parts[1]
 
+			if dir == "~" {
+				dir, _ = os.UserHomeDir()
+			}
+
 			err := os.Chdir((dir))
 
-			if err != nil{
+			if err != nil {
 				fmt.Printf("cd: %s: No such file or directory\n", parts[1])
 			}
 
