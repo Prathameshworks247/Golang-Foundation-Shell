@@ -21,7 +21,7 @@ func Contains(slice []string, target string) bool {
 func main() {
 	reader := bufio.NewReader(os.Stdin)
 
-	builtinCommands := []string{"exit", "echo", "type", "pwd"}
+	builtinCommands := []string{"exit", "echo", "type", "pwd", "cd"}
 
 	for {
 		fmt.Print("$ ")
@@ -40,7 +40,7 @@ func main() {
 
 		parts := strings.Fields(command)
 		cmd := parts[0]
-
+		// fmt.Println(parts[1])
 		switch cmd {
 
 		case "exit":
@@ -78,6 +78,18 @@ func main() {
 				log.Fatalf("Failed to read current working directory: %v", err)
 			}
 			fmt.Println(dir)
+		case "cd":
+			if len(parts) < 2{
+				continue
+			}
+
+			dir := parts[1]
+
+			err := os.Chdir((dir))
+
+			if err != nil{
+				fmt.Printf("cd: %s: No such file or directory\n", parts[1])
+			}
 
 		default:
 			path, err := exec.LookPath(cmd)
